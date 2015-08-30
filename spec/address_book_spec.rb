@@ -4,9 +4,9 @@ RSpec.describe AddressBook do
   let(:book) { AddressBook.new }
   
   def check_entry(entry, expected_name, expected_number, expected_email)
-    expect(entry.name).to eql expected_name
-    expect(entry.phone_number).to eql expected_number
-    expect(entry.email).to eql expected_email
+    expect(entry.name).to eq expected_name
+    expect(entry.phone_number).to eq expected_number
+    expect(entry.email).to eq expected_email
   end
 
   context "attributes" do
@@ -80,5 +80,32 @@ RSpec.describe AddressBook do
      end  
 
   end  
+  
+  context ".import_from_csv2" do
+    it "imports the correct number of entries" do
 
+      book.import_from_csv("entries_2.csv")
+      book_size = book.entries.size
+
+      expect(book_size).to eq 3
+    end
+    
+    it "imports the 1st entry" do
+       book.import_from_csv("entries_2.csv")
+       entry_one = book.entries[1]
+       check_entry(entry_one, "Kevin", "610-532-8915", "kevin@kevin.com")
+    end
+
+    it "imports the 2nd entry" do
+       book.import_from_csv("entries_2.csv")
+       entry_two = book.entries[0]
+       check_entry(entry_two, "Bryan", "610-532-8916", "bryan@bryan.com")
+    end
+ 
+    it "imports the 3rd entry" do
+       book.import_from_csv("entries_2.csv")
+       entry_three = book.entries[2]
+       check_entry(entry_three, "Tracy", "610-532-8917", "tracy@tracy.com")
+    end
+  end
 end
